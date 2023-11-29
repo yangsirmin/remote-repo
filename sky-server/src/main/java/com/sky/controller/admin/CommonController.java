@@ -15,18 +15,24 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@Api(tags = "文件上穿")
+@Api(tags = "文件上传")
 @Slf4j
 public class CommonController {
     @Autowired
     private AliOssUtil aliOssUtil;
 
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     */
     @PostMapping("/admin/common/upload")
     @ApiOperation("上传文件")
     public Result<String> upload(MultipartFile file){
+        log.info("文件上传");
         String fileOriginalFilename = file.getOriginalFilename();
-        String string = fileOriginalFilename.substring(fileOriginalFilename.lastIndexOf("."));
-        String fileName = UUID.randomUUID().toString() + string;
+        String png = fileOriginalFilename.substring(fileOriginalFilename.lastIndexOf("."));
+        String fileName = UUID.randomUUID().toString() + png;
         try {
             String filePath = aliOssUtil.upload(file.getBytes(), fileName);
             return Result.success(filePath);
