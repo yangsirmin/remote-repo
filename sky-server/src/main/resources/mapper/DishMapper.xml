@@ -8,4 +8,19 @@
         insert into sky_take_out.dish (name, category_id, price, image, description, create_time, update_time, create_user, update_user, status)
             values (#{name}, #{categoryId}, #{price}, #{image}, #{description}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser}, #{status})
     </insert>
+    <select id="dishPage" resultType="com.sky.vo.DishVO">
+        select d.*, c.name as category_name from sky_take_out.dish d
+            left outer join sky_take_out.category c on d.category_id = c.id
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and d.status = #{status}
+            </if>
+        </where>
+    </select>
 </mapper>

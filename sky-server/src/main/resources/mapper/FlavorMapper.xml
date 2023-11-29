@@ -6,6 +6,8 @@
 
     <insert id="insertBatch">
         insert into sky_take_out.dish_flavor (dish_id, name, value) VALUES
-            (#{dishId}, #{name}, #{value})
+            <foreach collection="flavors" separator="," item="flavor">
+                (#{flavor.dishId},#{flavor.name},#{flavor.value})
+            </foreach>
     </insert>
 </mapper>
