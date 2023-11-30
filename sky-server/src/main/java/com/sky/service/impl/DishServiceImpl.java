@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -89,15 +90,54 @@ public class DishServiceImpl implements DishService {
         }
         //判断是否可以删除-->是否关联套餐？？?
         for (Long id : ids) {
-            List<Long> dishId = setmealDishMapper.getSetmealIdByDishId(id);
-            if (dishId != null && dishId.size() > 0) {
+            List<Long> setmealId = setmealDishMapper.getSetmealIdByDishId(id);
+            if (setmealId != null && setmealId.size() > 0) {
                 throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
             }
         }
-            //删除菜品
+        //删除菜品
         dishMapper.deleteByids(ids);
-            //删除口味
+        //删除口味
         flavorMapper.deleteByDishId(ids);
 
+    }
+
+    /**
+     * 根据id查询菜品
+     * @param id
+     * @return
+     */
+    @Override
+    public DishVO getDishById(Long id) {
+        DishVO dishVO = new DishVO();
+
+        Dish dish = dishMapper.getByid(id);
+        BeanUtils.copyProperties(dish,dishVO);
+
+        List<DishFlavor> dishFlavor = flavorMapper.getById(id);
+        dishVO.setFlavors(dishFlavor);
+        return dishVO;
+    }
+
+    /**
+     * 修改菜品
+     * @param dishDTO
+     */
+    @Override
+    public void updateDishAndFlavor(DishDTO dishDTO) {
+        //更新菜品
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO,dish);
+        dishMapper.updateDish(dish);
+        //删除所有口味
+        flavorMapper.deleteByDishId(Collections.singletonList(dish.getId()));
+        //添加口味
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        if (flavors != null && flavors.size() > 0) {
+            flavors.forEach(dishFlavor -> {
+                dishFlavor.setDishId(dish.getId());
+            });
+            flavorMapper.insertBatch(flavors);
+        }
     }
 }

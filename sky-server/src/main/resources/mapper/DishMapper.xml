@@ -8,6 +8,29 @@
         insert into sky_take_out.dish (name, category_id, price, image, description, create_time, update_time, create_user, update_user, status)
             values (#{name}, #{categoryId}, #{price}, #{image}, #{description}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser}, #{status})
     </insert>
+    <update id="updateDish" parameterType="com.sky.entity.Dish">
+        update sky_take_out.dish
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="image != null">
+                image =#{image},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </set> where id = #{id}
+    </update>
     <delete id="deleteByids" >
         delete from sky_take_out.dish where id in
         <foreach collection="ids" item="id" separator="," open="(" close=")">
@@ -29,5 +52,6 @@
                 and d.status = #{status}
             </if>
         </where>
+        order by update_time desc
     </select>
 </mapper>

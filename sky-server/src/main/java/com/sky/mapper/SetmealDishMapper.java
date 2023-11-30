@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface SetmealDishMapper {
     /**
-     * 通过菜品id查询套餐
+     * 通过菜品id查询套餐id
      * @param dishId
      * @return
      */
-    @Select("select sky_take_out.setmeal_dish.dish_id from sky_take_out.setmeal_dish where dish_id = #{dishId}")
+    @Select("select sky_take_out.setmeal_dish.setmeal_id from sky_take_out.setmeal_dish where dish_id = #{dishId}")
     List<Long> getSetmealIdByDishId(Long dishId);
 }
