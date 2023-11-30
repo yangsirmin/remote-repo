@@ -9,4 +9,10 @@ import java.util.List;
 @Mapper
 public interface FlavorMapper {
     void insertBatch(List<DishFlavor> flavors);
+
+    /**
+     * 通过菜品id删除口味
+     * @param dishIds
+     */
+    void deleteByDishId(List<Long> dishIds);
 }
