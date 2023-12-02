@@ -41,14 +41,14 @@ public interface DishMapper {
      * @return
      */
     @Select("select * from sky_take_out.dish where id = #{id}")
-    Dish getByid(Long id);
+    Dish getById(Long id);
 
 
     /**
      * 通过ids批量删除菜品
      * @param ids
      */
-    void deleteByids(List<Long> ids);
+    void deleteByIds(List<Long> ids);
 
     /**
      * 修改菜品

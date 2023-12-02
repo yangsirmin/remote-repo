@@ -31,7 +31,7 @@
             </if>
         </set> where id = #{id}
     </update>
-    <delete id="deleteByids" >
+    <delete id="deleteByIds" >
         delete from sky_take_out.dish where id in
         <foreach collection="ids" item="id" separator="," open="(" close=")">
             #{id}

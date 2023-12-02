@@ -83,7 +83,7 @@ public class DishServiceImpl implements DishService {
     public void deleteDishByIds(List<Long> ids) {
         //判断是否可以删除-->是否为在售？？？
         for (Long id : ids) {
-            Dish dish = dishMapper.getByid(id);
+            Dish dish = dishMapper.getById(id);
             if (dish.getStatus() == StatusConstant.ENABLE) {
                 throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
             }
@@ -96,7 +96,7 @@ public class DishServiceImpl implements DishService {
             }
         }
         //删除菜品
-        dishMapper.deleteByids(ids);
+        dishMapper.deleteByIds(ids);
         //删除口味
         flavorMapper.deleteByDishId(ids);
 
@@ -111,7 +111,7 @@ public class DishServiceImpl implements DishService {
     public DishVO getDishById(Long id) {
         DishVO dishVO = new DishVO();
 
-        Dish dish = dishMapper.getByid(id);
+        Dish dish = dishMapper.getById(id);
         BeanUtils.copyProperties(dish,dishVO);
 
         List<DishFlavor> dishFlavor = flavorMapper.getById(id);
