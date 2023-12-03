@@ -44,12 +44,12 @@ public class UserController {
         //创建jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_ID,user.getId());
-        String jwt = JwtUtil.createJWT(jwtProperties.getAdminSecretKey(), jwtProperties.getUserTtl(), claims);
+        String token = JwtUtil.createJWT(jwtProperties.getAdminSecretKey(), jwtProperties.getUserTtl(), claims);
         //响应前端
         UserLoginVO userLoginVO = UserLoginVO.builder()
-                .openid(user.getOpenid())
-                .token(jwt)
                 .id(user.getId())
+                .openid(user.getOpenid())
+                .token(token)
                 .build();
         return Result.success(userLoginVO);
     }
