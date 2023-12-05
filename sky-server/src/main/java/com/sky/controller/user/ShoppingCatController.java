@@ -41,7 +41,19 @@ public class ShoppingCatController {
     @GetMapping("/list")
     @ApiOperation("查看购物车")
     public Result<List<ShoppingCart>> showShoppingCart(){
+        log.info("查看购物车");
         List<ShoppingCart> list = shoppingCartService.showShoppingCart();
         return Result.success(list);
+    }
+
+    /**
+     * 清空购物车
+     * @return
+     */
+    @DeleteMapping("/clean")
+    public Result cleanShoppingCart(){
+        log.info("清空购物车");
+        shoppingCartService.cleanShoppingCart();
+        return Result.success();
     }
 }
