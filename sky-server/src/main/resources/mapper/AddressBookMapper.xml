@@ -17,7 +17,7 @@
         </where>
     </select>
 
-    <update id="update" parameterType="addressBook">
+    <update id="update" parameterType="com.sky.entity.AddressBook">
         update sky_take_out.address_book
         <set>
             <if test="consignee != null">
