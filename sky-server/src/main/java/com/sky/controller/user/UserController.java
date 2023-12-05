@@ -44,7 +44,7 @@ public class UserController {
         //创建jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_ID,user.getId());
-        String token = JwtUtil.createJWT(jwtProperties.getAdminSecretKey(), jwtProperties.getUserTtl(), claims);
+        String token = JwtUtil.createJWT(jwtProperties.getUserSecretKey(), jwtProperties.getUserTtl(), claims);
         //响应前端
         UserLoginVO userLoginVO = UserLoginVO.builder()
                 .id(user.getId())
