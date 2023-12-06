@@ -35,7 +35,8 @@ public class OrderTask {
         }
     }
 
-    @Scheduled(cron = "0 0 1 * * ? *")//每天凌晨1点执行
+
+    @Scheduled(cron = "0 0 1 * * ?")//每天凌晨1点执行
     public void completedDeliver(){
         log.info("修改凌晨1点派送中的订单");
         LocalDateTime time = LocalDateTime.now().plusHours(-1);
