@@ -73,4 +73,11 @@ public interface OrderMapper{
      * @return
      */
     Integer getUserByMap(Map map);
+
+    /**
+     * 通过map查询订单数量
+     * @param map
+     * @return
+     */
+    Integer getOrderCountByMap(Map map);
 }
