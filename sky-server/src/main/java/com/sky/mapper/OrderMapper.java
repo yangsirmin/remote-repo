@@ -66,4 +66,11 @@ public interface OrderMapper{
      * @return
      */
     Double turnoverByMap(Map map);
+
+    /**
+     * 通过Map获得用户数量
+     * @param map
+     * @return
+     */
+    Integer getUserByMap(Map map);
 }

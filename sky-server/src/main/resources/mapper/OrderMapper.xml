@@ -53,7 +53,7 @@
         order by order_time desc
     </select>
     <select id="turnoverByMap" resultType="java.lang.Double" parameterType="java.util.Map">
-        select * from sky_take_out.orders
+        select sum(amount) from sky_take_out.orders
         <where>
             <if test="begin != null">
                 and order_time &gt; #{begin}
@@ -63,6 +63,17 @@
             </if>
             <if test="status != null">
                 and status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="getUserByMap" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from sky_take_out.user
+        <where>
+            <if test="begin != null">
+                and create_time &gt; #{begin}
+            </if>
+            <if test="end != null">
+                and create_time &lt; #{end}
             </if>
         </where>
     </select>
