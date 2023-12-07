@@ -79,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(ordersSubmitDTO,orders);
         orders.setConsignee(addressBook.getConsignee());
         orders.setOrderTime(LocalDateTime.now());
-        orders.setNumber(String.valueOf(System.currentTimeMillis() + currentId));
+        orders.setNumber(String.valueOf(System.currentTimeMillis()));
         orders.setPhone(addressBook.getPhone());
         orders.setPayStatus(Orders.UN_PAID);
         orders.setUserId(currentId);
@@ -87,17 +87,11 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.insertOrder(orders);
         //向订单明细表插入多个数据
         List<OrderDetail> ordersList = new ArrayList<>();
-        OrderDetail orderDetail = new OrderDetail();
         for (ShoppingCart cart : shoppingCarts) {
-           orderDetail.setOrderId(cart.getId());
-           orderDetail.setNumber(cart.getNumber());
-           orderDetail.setAmount(cart.getAmount());
-           orderDetail.setName(cart.getName());
-           orderDetail.setImage(cart.getImage());
-           orderDetail.setDishId(cart.getDishId());
-           orderDetail.setDishFlavor(cart.getDishFlavor());
-           orderDetail.setSetmealId(cart.getSetmealId());
-           ordersList.add(orderDetail);
+            OrderDetail orderDetail = new OrderDetail();//订单明细
+            BeanUtils.copyProperties(cart, orderDetail);
+            orderDetail.setOrderId(orders.getId());//设置当前订单明细关联的订单id
+            ordersList.add(orderDetail);
         }
         orderDatilsMapper.insetOrderDetails(ordersList);
         //清空购物车
