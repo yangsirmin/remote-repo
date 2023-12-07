@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper{
@@ -58,4 +59,11 @@ public interface OrderMapper{
      */
     @Select("select * from sky_take_out.orders where status = #{status} and order_time < #{orderTime}")
     List<Orders> outTime(Integer status, LocalDateTime orderTime);
+
+    /**
+     * 营业额统计接口
+     * @param map
+     * @return
+     */
+    Double turnoverByMap(Map map);
 }
