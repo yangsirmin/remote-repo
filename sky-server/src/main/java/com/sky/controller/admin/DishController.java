@@ -110,4 +110,17 @@ public class DishController {
         redisTemplate.delete(keys);
     }
 
+    /**
+     * 菜品的起售，停售
+     * @param status
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("菜品的起售，停售")
+    public Result updateStatus(@PathVariable Integer status, Long id){
+        log.info("菜品的起售，停售:{}",status);
+        dishService.updateStatus(status, id);
+        return Result.success();
+    }
+
 }
